@@ -1,0 +1,46 @@
+pipeline { 
+   agent any 
+    # environment { 
+    #     ACCESS_KEY = credentials('AWS_ACCESS_KEY') 
+    #     SECRET_KEY = credentials('AWS_SECRET_ACCESS_KEY') 
+    # } 
+    stages { 
+     	#stage('install_deps') {
+		#steps {
+		#	sh "cd /tmp"
+		#	sh "curl -o terraform.zip https://releases.hashicorp.com/terraform/0.12.8/terraform_0.12.8_linux_amd64.zip"
+		#	sh "unzip terraform.zip"
+		#	sh "sudo mv terraform /usr/bin"
+		#	sh "rm -rf terraform.zip"
+		#	sh "rm -rf *.tf*"
+		#	sh "rm -rf Terraform-pipeline"
+		#	}
+		#}
+	stage('Git clone')
+	{
+		steps{
+			sh "git clone https://github.com/nagurameer/ec2deployment.git"
+			sh "mv ec2deployment/*  $WORKSPACE"
+			sh "ls -al"
+		}
+	}
+      	stage('TerraformInit'){ 
+         	steps { 
+                     sh "terraform init"                  
+             	} 
+         }
+	 stage('TerraformPlan'){ 
+              steps { 
+                     sh "terraform plan -out terraform.tfplan"      
+		     
+             } 
+         }
+	 stage ('TerraformApply'){
+	 	steps{
+		     sh "terraform apply terraform.tfplan"
+		}
+	 }
+	 stage ('TerraformShow'){
+	 	steps{
+		     sh "terraform show"
+		}
