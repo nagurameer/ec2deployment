@@ -4,9 +4,9 @@ pipeline {
     stages { 
 	stage('Git clone'){
 		steps{
-			sh "git clone https://github.com/nagurameer/ec2deployment.git"
-			sh "mv ec2deployment/*  $WORKSPACE"
-			sh "ls -al"
+			"git clone https://github.com/nagurameer/ec2deployment.git"
+		        "mv ec2deployment/*  $WORKSPACE"
+		        "ls -al"
 		}
 	}
       	stage('TerraformInit'){ 
