@@ -6,7 +6,7 @@ provider "aws" {
  	
 # ec2 resource details
 
-resource "aws_instance" "httpd" {
+resource "aws_instance" "ameerhttpd" {
   ami =  "ami-00eb20669e0990cb4"
   instance_type = "t2.micro"
 }
